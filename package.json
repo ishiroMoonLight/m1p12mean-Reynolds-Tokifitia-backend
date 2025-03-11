@@ -1,0 +1,32 @@
+{
+  "name": "m1p12mean-reynolds-tokifitia-backend",
+  "version": "1.0.0",
+  "description": "Project Master 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishiroMoonLight/m1p12mean-Reynolds-Tokifitia-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishiroMoonLight/m1p12mean-Reynolds-Tokifitia-backend/issues"
+  },
+  "homepage": "https://github.com/ishiroMoonLight/m1p12mean-Reynolds-Tokifitia-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9"
+  }
+}
