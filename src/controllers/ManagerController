@@ -1,0 +1,37 @@
+const bcrypt = require('bcryptjs');
+const Manager = require('../models/Manager/Manager');
+
+exports.registerManager = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if manager exists
+        let manager = await Manager.findOne({ email });
+        if (manager) return res.status(400).json({ message: 'Manager already exists' });
+
+        // Create new manager
+        manager = new Manager({ email, password});
+        await manager.save();
+
+        res.status(201).json({ message: 'Manager registered successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};
+
+exports.loginManager = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const manager = await Manager.findOne({ email });
+        if (!manager) return res.status(400).json({ message: 'Invalid credentials , no email found' });
+
+        // Compare password
+        const isMatch = await bcrypt.compare(password, manager.password);
+        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials , wrong password' });
+
+        res.status(200).json({ message: 'Login successful' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};
