@@ -6,7 +6,13 @@ const reparationSchema = new mongoose.Schema({
     prix: { type: Number, required: true },
     duree: { type: String, required: true },
     image: { type: String, required: false },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    pieces: [
+        {
+            piece: { type: mongoose.Schema.Types.ObjectId, ref: "Piece", required: true },
+            quantiteReparation: { type: Number, required: true }
+        }
+    ],
 });
 
 module.exports = mongoose.model("Reparation", reparationSchema);
