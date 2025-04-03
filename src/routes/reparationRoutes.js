@@ -9,5 +9,6 @@ router.post("/", ReparationController.createReparation);
 router.put("/:id", ReparationController.updateReparation);
 router.delete("/:id", ReparationController.deleteReparation);
 router.post("/affect-piece", ReparationController.addPieceToReparation);
+router.post("/affect-personnel", ReparationController.assignEmployeeToReparation);
 
 module.exports = router;

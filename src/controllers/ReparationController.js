@@ -1,8 +1,48 @@
 const ReparationModel = require("../models/Reparation/Reparation");
 const PieceModel = require("../models/Pieces/Pieces");
-
+const Employee = require("../models/Manager/Employee");
 
 const ReparationController = {
+
+    // Ajouter un employe à une réparation
+    async assignEmployeeToReparation(req, res) {
+        try {
+            const { employeeId, reparationId } = req.body;
+
+            // Vérifier si l'employé existe
+            const employee = await Employee.findById(employeeId);
+            if (!employee) {
+                return res.status(404).json({ message: "Employé introuvable" });
+            }
+
+            // Vérifier si la réparation existe
+            const reparation = await ReparationModel.findById(reparationId);
+            if (!reparation) {
+                return res.status(404).json({ message: "Réparation non trouvée" });
+            }
+
+            // Mettre à jour l'employé avec l'objet complet de la réparation
+            employee.reparation = reparation.toObject(); // Convertir en objet JS
+            await employee.save();
+
+            // Vérifier si l'employé est déjà dans `reparation.employees`
+            const isAlreadyAssigned = reparation.employees.some(emp => emp._id.toString() === employee._id.toString());
+
+            if (isAlreadyAssigned) {
+                return res.status(400).json({ message: "L'employé est déjà assigné à cette réparation" });
+            }
+
+            // Mettre à jour la réparation avec l'objet complet de l'employé
+            reparation.employees.push(employee.toObject());
+            await reparation.save();
+
+            // ✅ Réponse JSON indiquant que l'opération a réussi
+            res.json({ message: "Employé assigné à la réparation avec succès" });
+
+        } catch (error) {
+            res.status(500).json({ message: "Erreur serveur", error });
+        }
+    },
 
     // Ajouter une pièce à une réparation
     async addPieceToReparation(req, res) {
