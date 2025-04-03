@@ -31,12 +31,12 @@ const clientController = {
       
       const client = await Client.findOne({ email });
       if (!client) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'Invalid email' });
       }
 
       const isMatch = await bcrypt.compare(password, client.password);
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ message: 'Invalid password' });
       }
 
       const token = jwt.sign({ clientId: client._id }, process.env.JWT_SECRET, {
