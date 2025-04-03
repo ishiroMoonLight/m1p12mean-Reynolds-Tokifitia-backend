@@ -1,4 +1,5 @@
 const Employee = require('../models/Manager/Employee');
+const ReparationModel = require('../models/Reparation/Reparation');
 
 // Register a new Employee
 exports.registerEmployee = async (req, res) => {
@@ -73,6 +74,13 @@ exports.deleteEmployee = async (req, res) => {
         if (!deletedEmployee) {
             return res.status(404).json({ message: "Employee not found" });
         }
+
+        // Supprimer l'employé des réparations où il est assigné
+        await ReparationModel.updateMany(
+            { employees: req.params.id },
+            { $pull: { employees: req.params.id } }
+        );
+
         res.status(200).json({ message: "Employee deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: "Error deleting Employee", error: error.message });
