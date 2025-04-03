@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const employeeSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  firstname: { type: String, required: true },
-  bio: { type: String },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  pfp: { type: String },  // Link to profile picture
-  salary: { type: Number, required: true },
-  createdAt: { type: Date, default: Date.now },
+  name      : { type: String, required: true },
+  firstname : { type: String, required: true },
+  bio       : { type: String },
+  email     : { type: String, required: true, unique: true },
+  password  : { type: String, required: true },
+  pfp       : { type: String },  // Link to profile picture
+  salary    : { type: Number, required: true },
+  createdAt : { type: Date, default: Date.now },
   reparation: { type: mongoose.Schema.Types.Mixed, ref: "Reparation", default: null }
 }, { timestamps: true });
 
