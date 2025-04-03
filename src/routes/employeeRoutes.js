@@ -3,7 +3,7 @@ const router = express.Router();
 const employeeController = require('../controllers/EmployeeControllers');
 
 // Routes
-router.post('/register', employeeController.registerEmployee);
+router.post('/', employeeController.registerEmployee);
 router.get('/', employeeController.getAllEmployees);
 router.get('/:id', employeeController.getEmployeeById);
 router.put('/:id', employeeController.updateEmployee);

@@ -9,10 +9,13 @@ const reparationSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     pieces: [
         {
-            piece: { type: mongoose.Schema.Types.ObjectId, ref: "Piece", required: true },
+            piece: { type: mongoose.Schema.Types.Mixed, ref: "Piece", required: true },
             quantiteReparation: { type: Number, required: true }
         }
     ],
+    employees: [
+        { type: mongoose.Schema.Types.Mixed, ref: "Employee" } // 🔥 Ajout du champ employés
+    ]
 });
 
 module.exports = mongoose.model("Reparation", reparationSchema);
