@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 const clientRouter = require("./routes/clientRoutes");
 const employeeRouter = require("./routes/employeeRoutes");
 const managerRouter = require("./routes/managerRoutes");
+const reparationRouter = require("./routes/reparationRoutes");
 const app = express();
 const cors = require('cors');
 
@@ -15,10 +16,11 @@ function run() {
     app.use('/api/clients', clientRouter);
     app.use('/api/employees', employeeRouter);
     app.use('/api/managers', managerRouter);
+    app.use('/api/reparations', reparationRouter);
     app.listen(PORT, () => {
         console.log(`Serveur en écoute sur le port ${PORT}`);
     });
 };
 
 
-module.exports = {run}
+module.exports = { run }
