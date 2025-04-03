@@ -8,5 +8,6 @@ router.get("/:id", ReparationController.getReparationById);
 router.post("/", ReparationController.createReparation);
 router.put("/:id", ReparationController.updateReparation);
 router.delete("/:id", ReparationController.deleteReparation);
+router.post("/affect-piece", ReparationController.addPieceToReparation);
 
 module.exports = router;

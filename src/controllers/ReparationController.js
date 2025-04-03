@@ -1,11 +1,51 @@
 const ReparationModel = require("../models/Reparation/Reparation");
+const PieceModel = require("../models/Pieces/Pieces");
+
 
 const ReparationController = {
+
+    // Ajouter une pièce à une réparation
+    async addPieceToReparation(req, res) {
+        try {
+            const { reparationId, pieceId, quantite } = req.body;
+
+            // Vérifier si la réparation existe
+            const reparation = await ReparationModel.findById(reparationId);
+            if (!reparation) {
+                return res.status(404).json({ message: "Réparation non trouvée" });
+            }
+
+            // Vérifier si la pièce existe
+            const piece = await PieceModel.findById(pieceId);
+            if (!piece) {
+                return res.status(404).json({ message: "Pièce non trouvée" });
+            }
+
+            // Vérifier si la quantité demandée est disponible
+            if (piece.quantite < quantite) {
+                return res.status(400).json({ message: "Quantité insuffisante en stock" });
+            }
+
+            // Ajouter la pièce à la réparation
+            reparation.pieces.push({ piece: piece, quantiteReparation: quantite });
+
+            // Sauvegarder les modifications
+            await reparation.save();
+
+            res.json({ message: "Pièce ajoutée à la réparation avec succès", reparation });
+        } catch (error) {
+            res.status(500).json({ message: "Erreur serveur", error });
+        }
+    },
 
     // Récupérer toutes les réparations
     async getAllReparations(req, res) {
         try {
-            const reparations = await ReparationModel.find();
+            const reparations = await ReparationModel.find().populate({
+                path: "pieces.piece", // Récupère l'objet complet de la pièce
+                model: "Piece"
+            })
+                .exec();
             res.json(reparations);
         } catch (error) {
             res.status(500).json({ message: "Erreur serveur", error });
