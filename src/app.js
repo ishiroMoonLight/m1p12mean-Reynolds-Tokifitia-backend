@@ -9,6 +9,12 @@ const piecesRouter = require("./routes/piecesRoutes");
 const app = express();
 const cors = require('cors');
 
+// Limiter la taille de la requête à 50 Mo (par exemple)
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '50mb' }));  // pour JSON
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));  // pour URL-encoded
+
+
 const PORT = process.env.PORT || 5000;
 function run() {
     connectDB();
