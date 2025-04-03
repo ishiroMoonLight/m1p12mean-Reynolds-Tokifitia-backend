@@ -67,10 +67,15 @@ const ReparationController = {
             }
 
             // Ajouter la pièce à la réparation
-            reparation.pieces.push({ piece: piece, quantiteReparation: quantite });
+            reparation.pieces.push({ piece: piece.toObject(), quantiteReparation: quantite });
+            piece.reparation.push({
+                reparation: reparation.toObject(),
+                quantiteReparation: quantite
+            });
 
             // Sauvegarder les modifications
             await reparation.save();
+            await piece.save();
 
             res.json({ message: "Pièce ajoutée à la réparation avec succès", reparation });
         } catch (error) {
