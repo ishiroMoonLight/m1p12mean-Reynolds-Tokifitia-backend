@@ -53,6 +53,19 @@ exports.getEmployeeById = async (req, res) => {
     }
 };
 
+//update Employee
+exports.updateEmployee = async (req, res) => {
+    try {
+        const updatedEmployee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedEmployee) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
+        res.status(200).json(updatedEmployee);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating Employee", error: error.message });
+    }
+};
+
 // Delete Employee
 exports.deleteEmployee = async (req, res) => {
     try {
