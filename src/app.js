@@ -6,6 +6,7 @@ const employeeRouter = require("./routes/employeeRoutes");
 const managerRouter = require("./routes/managerRoutes");
 const reparationRouter = require("./routes/reparationRoutes");
 const piecesRouter = require("./routes/piecesRoutes");
+const appointmentRouter = require("./routes/appointmentRoutes");
 const app = express();
 const cors = require('cors');
 
@@ -25,6 +26,7 @@ function run() {
     app.use('/api/managers', managerRouter);
     app.use('/api/reparations', reparationRouter);
     app.use('/api/pieces', piecesRouter);
+    app.use('/api/appointments', appointmentRouter);
     app.listen(PORT, () => {
         console.log(`Serveur en écoute sur le port ${PORT}`);
     });
