@@ -7,7 +7,7 @@ const AppointmentController = {
 
             const newAppointment = new Appointment({ date, client, state, description, image });
             await newAppointment.save();
-            res.status(201).json(newAppointment);
+            res.status(201).json({message:"Rendez-vous créé avec succès"});
        } catch (error) {
            res.status(500).json({ message: "Erreur lors de la création du RDV", error: error.message });
        }
